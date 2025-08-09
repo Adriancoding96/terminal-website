@@ -1,0 +1,171 @@
+:root {
+  --bg: #0b0f10;
+  --panel: #0f1517;
+  --text: #c7d1d8;
+  --muted: #6b7a88;
+  --green: #98c379;
+  --blue: #61afef;
+  --yellow: #e5c07b;
+  --red: #e06c75;
+  --cyan: #56b6c2;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "DejaVu Sans Mono", "Courier New", monospace;
+  background: radial-gradient(1000px 700px at 10% 10%, #0d1316 20%, var(--bg) 70%);
+  color: var(--text);
+}
+
+#terminal {
+  max-width: 1080px; /* ~20% wider */
+  width: 100%;
+  height: 100vh;
+  margin: 0; /* align left */
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+#output {
+  flex: 1 1 auto;
+  overflow: auto;
+  padding-bottom: 8px;
+  white-space: pre-wrap;
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt-line {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+}
+
+.prompt {
+  color: var(--green);
+}
+
+.input {
+  flex: 1;
+  outline: none;
+  min-height: 1.2em;
+}
+
+.dim { color: var(--muted); }
+.ok { color: var(--green); }
+.warn { color: var(--yellow); }
+.err { color: var(--red); }
+.info { color: var(--blue); }
+.cyan { color: var(--cyan); }
+
+.line { line-height: 1.5; }
+
+/* Prevent install progress line from wrapping mid-frame */
+.progress { white-space: pre; }
+.wtfetch { white-space: pre; }
+.wt-key { color: var(--cyan); }
+.wt-val { color: var(--text); }
+
+/* wtfetch image layout */
+.nf-container {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.nf-image {
+  width: 220px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.nf-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nf-row { white-space: pre; }
+
+.cursor::after {
+  content: "\2588"; /* full block */
+  display: inline-block;
+  width: 0.6ch;
+  margin-left: 2px;
+  animation: blink 1s steps(1, end) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* previous graphical bar styles removed; text-based bar is rendered as plain text */
+
+.file { color: var(--text); }
+.file .name { color: var(--blue); }
+.file .size { color: var(--muted); }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Floating help box */
+#help-box {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  padding: 10px 12px;
+  background: rgba(15, 21, 23, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 12px;
+  line-height: 1.4;
+  z-index: 1000;
+  user-select: none;
+}
+
+#help-box .help-title {
+  font-weight: 600;
+  color: var(--blue);
+  margin-bottom: 6px;
+  letter-spacing: 0.4px;
+}
+
+#help-box .help-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#help-box .help-list li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+#help-box .cmd {
+  color: var(--cyan);
+}
+
+#help-box .desc {
+  color: var(--muted);
+}
+
+

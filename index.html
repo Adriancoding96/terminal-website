@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>adrian-shell</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <meta name="description" content="A browser terminal that mimics pacman installing adrian-shell with ls and cat commands." />
+  </head>
+  <body>
+    <div id="terminal" aria-label="Terminal window" role="application">
+      <div id="output" aria-live="polite" aria-atomic="false">
+        <div id="prompt-line" class="prompt-line" aria-label="Command input">
+          <span id="prompt" class="prompt">[adrian@webterm ~]$</span>
+          <span id="input" class="input" contenteditable="true" spellcheck="false" role="textbox" aria-multiline="false"></span>
+        </div>
+      </div>
+    </div>
+
+    <div id="help-box" aria-label="Available commands">
+      <div class="help-title">Commands</div>
+      <ul class="help-list">
+        <li><span class="cmd">ls</span> <span class="desc">List files</span></li>
+        <li><span class="cmd">cat <em>&lt;file&gt;</em></span> <span class="desc">Show file</span></li>
+        <li><span class="cmd">wtfetch</span> <span class="desc">System info</span></li>
+        <li><span class="cmd">clear</span> <span class="desc">Clear screen</span></li>
+      </ul>
+    </div>
+
+    <script src="./script.js" defer></script>
+  </body>
+  </html>
+
+
