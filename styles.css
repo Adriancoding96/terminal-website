@@ -168,4 +168,39 @@ body {
   color: var(--muted);
 }
 
+/* Game overlay */
+.term-game { margin: 8px 0; }
+.game-screen {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px; /* slightly smaller for higher column count */
+  line-height: 1.2;
+  white-space: pre;
+  overflow: auto;
+}
+
+.game-hud {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: var(--text);
+  pointer-events: none;
+}
+
+.game-hud .title {
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.game-hud .sub {
+  color: var(--muted);
+  font-size: 12px;
+}
+
 
