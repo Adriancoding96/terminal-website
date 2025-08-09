@@ -27,6 +27,12 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Cache-bust script.js reference
+        run: |
+          if [ -f index.html ]; then
+            sed -i 's#<script src="\./script.js" defer></script>#<script src="./script.js?v=${GITHUB_SHA}" defer></script>#' index.html || true
+          fi
+
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:

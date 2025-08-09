@@ -538,6 +538,11 @@
       submitCurrentInput();
       return;
     }
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      handleTabComplete();
+      return;
+    }
     if (e.key === 'c' && e.ctrlKey) {
       // Ctrl+C
       e.preventDefault();
@@ -574,6 +579,67 @@
     const sel = window.getSelection();
     sel.removeAllRanges();
     sel.addRange(range);
+  }
+
+  function handleTabComplete() {
+    const s = inputEl.textContent;
+    const hasTrailingSpace = /\s$/.test(s);
+    const segments = s.trim().length ? s.split(/\s+/) : [];
+    const isAtCommand = segments.length === 0 || (segments.length === 1 && !hasTrailingSpace);
+
+    const allCommands = Array.from(commands.keys());
+    const allFiles = files.map(f => f.name);
+
+    let headTokens;
+    let currentToken;
+    if (!segments.length) {
+      headTokens = [];
+      currentToken = '';
+    } else if (hasTrailingSpace) {
+      headTokens = segments;
+      currentToken = '';
+    } else {
+      headTokens = segments.slice(0, -1);
+      currentToken = segments[segments.length - 1];
+    }
+
+    const completingCommands = headTokens.length === 0;
+    const pool = completingCommands ? allCommands : allFiles;
+    const matches = currentToken ? pool.filter(x => x.startsWith(currentToken)) : pool.slice();
+
+    if (matches.length === 0) {
+      return;
+    }
+    if (matches.length === 1) {
+      const filled = matches[0];
+      const newInput = [...headTokens, filled].join(' ') + ' ';
+      inputEl.textContent = newInput;
+      placeCaretAtEnd(inputEl);
+      return;
+    }
+
+    const common = findCommonPrefix(matches);
+    if (common && common.length > currentToken.length) {
+      const newInput = [...headTokens, common].join(' ') + (hasTrailingSpace ? ' ' : '');
+      inputEl.textContent = newInput;
+      placeCaretAtEnd(inputEl);
+    } else {
+      // Show suggestions
+      printLine(matches.join('  '), 'dim');
+    }
+  }
+
+  function findCommonPrefix(arr) {
+    if (!arr.length) return '';
+    let prefix = arr[0];
+    for (let i = 1; i < arr.length; i++) {
+      const s = arr[i];
+      let j = 0;
+      while (j < prefix.length && j < s.length && prefix[j] === s[j]) j++;
+      prefix = prefix.slice(0, j);
+      if (!prefix) break;
+    }
+    return prefix;
   }
 
   // Boot sequence: type and run `sudo pacman -S adrian-shell`
